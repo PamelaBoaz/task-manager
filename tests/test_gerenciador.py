@@ -45,3 +45,13 @@ def test_quando_listar_tarefas_a_tarefa_retornada_deve_possuir_estado():
     response = cliente.get("/tarefas")
     assert "estado" in response.json().pop()
     TAREFAS.clear()
+
+def test_para_quando_adicionar_nova_tarefa_retorna_status_200():
+    cliente = TestClient(app)
+    response = cliente.post(
+        "/tarefas",
+        json={"id": "4", "titulo": "fazer jantar", "descricao": "cozinhar para 4 adultos", "estado": "não finalizado"}
+        )
+    assert response.status_code == 200
+    TAREFAS.clear()
+   

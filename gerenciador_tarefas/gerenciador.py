@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -23,6 +24,17 @@ TAREFAS = [
     },
 ]
 
+class Tarefa(BaseModel):
+    id: str
+    titulo: str
+    descricao: str
+    estado: str
+
 @app.get("/tarefas")
 def listar():
+    return TAREFAS
+
+@app.post("/tarefas")
+def adicionar(batatinhas: Tarefa):
+    TAREFAS.append(dict(batatinhas))
     return TAREFAS
